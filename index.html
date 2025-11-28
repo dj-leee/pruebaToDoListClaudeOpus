@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TaskFlow - Gestiona tu día</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="header">
+      <div class="logo">
+        <i class="fas fa-check-circle"></i>
+        <span>TaskFlow</span>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">
+        <i class="fas fa-moon"></i>
+      </button>
+    </header>
+
+    <!-- Stats -->
+    <section class="stats">
+      <div class="stat-card">
+        <span class="stat-number" id="totalTasks">0</span>
+        <span class="stat-label">Total</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="completedTasks">0</span>
+        <span class="stat-label">Completadas</span>
+      </div>
+      <div class="stat-card">
+        <span class="stat-number" id="pendingTasks">0</span>
+        <span class="stat-label">Pendientes</span>
+      </div>
+      <div class="stat-card progress-card">
+        <div class="progress-ring">
+          <svg viewBox="0 0 36 36">
+            <path class="progress-bg"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+            <path class="progress-bar" id="progressBar"
+              stroke-dasharray="0, 100"
+              d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831"/>
+          </svg>
+          <span class="progress-text" id="progressText">0%</span>
+        </div>
+      </div>
+    </section>
+
+    <!-- Input Section -->
+    <section class="input-section">
+      <form id="taskForm" class="task-form">
+        <div class="input-wrapper">
+          <i class="fas fa-plus"></i>
+          <input
+            type="text"
+            id="taskInput"
+            placeholder="¿Qué necesitas hacer hoy?"
+            autocomplete="off"
+            maxlength="100"
+          >
+        </div>
+        <div class="form-options">
+          <div class="priority-selector">
+            <button type="button" class="priority-btn" data-priority="low" title="Baja prioridad">
+              <i class="fas fa-flag"></i>
+            </button>
+            <button type="button" class="priority-btn active" data-priority="medium" title="Prioridad media">
+              <i class="fas fa-flag"></i>
+            </button>
+            <button type="button" class="priority-btn" data-priority="high" title="Alta prioridad">
+              <i class="fas fa-flag"></i>
+            </button>
+          </div>
+          <button type="submit" class="add-btn">
+            <i class="fas fa-paper-plane"></i>
+            <span>Añadir</span>
+          </button>
+        </div>
+      </form>
+    </section>
+
+    <!-- Filters -->
+    <section class="filters">
+      <button class="filter-btn active" data-filter="all">
+        <i class="fas fa-list"></i> Todas
+      </button>
+      <button class="filter-btn" data-filter="pending">
+        <i class="fas fa-clock"></i> Pendientes
+      </button>
+      <button class="filter-btn" data-filter="completed">
+        <i class="fas fa-check"></i> Completadas
+      </button>
+    </section>
+
+    <!-- Search -->
+    <div class="search-wrapper">
+      <i class="fas fa-search"></i>
+      <input type="text" id="searchInput" placeholder="Buscar tareas...">
+      <button class="clear-search" id="clearSearch" aria-label="Limpiar búsqueda">
+        <i class="fas fa-times"></i>
+      </button>
+    </div>
+
+    <!-- Task List -->
+    <section class="task-list-container">
+      <ul class="task-list" id="taskList"></ul>
+
+      <!-- Empty State -->
+      <div class="empty-state" id="emptyState">
+        <i class="fas fa-clipboard-list"></i>
+        <h3>No hay tareas</h3>
+        <p>¡Añade tu primera tarea para comenzar!</p>
+      </div>
+    </section>
+
+    <!-- Actions -->
+    <section class="bulk-actions" id="bulkActions">
+      <button class="bulk-btn" id="completeAllBtn">
+        <i class="fas fa-check-double"></i> Completar todas
+      </button>
+      <button class="bulk-btn danger" id="clearCompletedBtn">
+        <i class="fas fa-trash-alt"></i> Limpiar completadas
+      </button>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>Hecho con <i class="fas fa-heart"></i> por TaskFlow</p>
+    </footer>
+  </div>
+
+  <!-- Toast Container -->
+  <div class="toast-container" id="toastContainer"></div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal">
+      <div class="modal-icon">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 class="modal-title">¿Estás seguro?</h3>
+      <p class="modal-message" id="modalMessage">Esta acción no se puede deshacer.</p>
+      <div class="modal-actions">
+        <button class="modal-btn cancel" id="modalCancel">Cancelar</button>
+        <button class="modal-btn confirm" id="modalConfirm">Confirmar</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
